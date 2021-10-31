@@ -9,4 +9,4 @@ const Users = new Schema({
   updated: { type: Date, default: Date.now },
 });
 
-module.exports = model('Users', Users);
+module.exports = model('Accounts', Users);
