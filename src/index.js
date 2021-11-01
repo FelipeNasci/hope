@@ -1,12 +1,12 @@
 require('dotenv').config();
 require('./infra/database/mongodb/connection/mongoAtlas');
+const {port} = require('./resources/configs/deploy');
 
 const express = require('express');
 const cors = require('cors');
 
 const routes = require('./routes');
 
-const port = 3005;
 const app = express();
 
 app.use(express.json());
