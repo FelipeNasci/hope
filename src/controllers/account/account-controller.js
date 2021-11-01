@@ -4,11 +4,12 @@ const Auth = require('../../resources/services/token');
 
 /**
  *
- * @param {User} user
+ * @param {Account} account
  */
 
-const signup = async user => {
-  return AccountDatabaseMongo.create(user);
+const signup = async account => {
+  const newAccount = await AccountDatabaseMongo.create(account);
+  return accountAuthentication(newAccount);
 };
 
 /**
@@ -19,7 +20,17 @@ const signup = async user => {
 
 const login = async ({ email, password }) => {
   const account = await AccountDatabaseMongo.read({ email, password });
-  return Authenticate(account, Auth.generateToken)
+  return accountAuthentication(account);
+};
+
+/**
+ *
+ * @param {Account} account
+ */
+
+const accountAuthentication = async account => {
+  delete account.password;
+  return Authenticate(account, Auth.generateToken);
 };
 
 module.exports = { signup, login };
