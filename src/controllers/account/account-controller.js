@@ -4,11 +4,18 @@ const Auth = require('../../resources/services/token');
 const Email = require('../../resources/services/email');
 /**
  *
- * @param {Account} account
+ * @param {AccountModel} account
  */
 
 const signup = async account => {
   const newAccount = await AccountDatabaseMongo.create(account);
+
+  Email.sendMail({
+    to: newAccount.email,
+    subject: 'Email recovery',
+    text: 'Welcome to HOPE!. Your email was registered with us',
+  });
+
   return accountAuthentication(newAccount);
 };
 
@@ -68,7 +75,7 @@ const changePasswordWithHashCode = async ({
   Email.sendMail({
     to: email,
     subject: 'Email recovery',
-    text: `You changed your password with success!`,
+    text: 'You changed your password with success!',
   });
 
   return !!accountUpdated;
