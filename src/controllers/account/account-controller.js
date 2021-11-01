@@ -39,8 +39,36 @@ const recoverPassword = async ({ email }) => {
 
   Email.sendMail({
     to: email,
-    subject: 'email recover',
+    subject: 'Email recovery',
     text: `Your code recovery is: ${hashRecover}`,
+  });
+
+  return !!accountUpdated;
+};
+
+/**
+ *
+ * @param {string} email
+ * @param {string} password
+ * @param {string} newPassword
+ * @param {string} hashRecover
+ */
+
+const changePasswordWithHashCode = async ({
+  email,
+  newPassword,
+  hashRecover,
+}) => {
+  const accountUpdated = await AccountDatabaseMongo.updateAndRemoveKey(
+    { email, hashRecover },
+    { password: newPassword },
+    ['hashRecover'],
+  );
+
+  Email.sendMail({
+    to: email,
+    subject: 'Email recovery',
+    text: `You changed your password with success!`,
   });
 
   return !!accountUpdated;
@@ -56,4 +84,4 @@ const accountAuthentication = async account => {
   return Authenticate(account, Auth.generateToken);
 };
 
-module.exports = { signup, login, recoverPassword };
+module.exports = { signup, login, recoverPassword, changePasswordWithHashCode };
