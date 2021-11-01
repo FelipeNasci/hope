@@ -1,8 +1,7 @@
-const { set, connect, connection } = require('mongoose');
+const { connect, connection } = require('mongoose');
 
-const { url, options } = require('../../../../resourses/configs/mongodb');
+const { url, options } = require('../../../../resources/configs/mongodb');
 
-// set('useCreateIndex', true);
 connect(url, options);
 
 let mongodb;

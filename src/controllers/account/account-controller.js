@@ -15,7 +15,6 @@ const signup = async user => {
  */
 
 const login = async ({ email, password }) => {
-  console.log({ email, password })
   return AccountDatabaseMongo.read({ email, password });
 };
 
