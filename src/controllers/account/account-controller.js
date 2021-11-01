@@ -43,7 +43,7 @@ const recoverPassword = async ({ email }) => {
     text: `Your code recovery is: ${hashRecover}`,
   });
 
-  return hashRecover;
+  return !!accountUpdated;
 };
 
 /**
