@@ -1,7 +1,7 @@
-import { verify } from 'jsonwebtoken';
-import { secret } from '../resources/configs/auth.json';
+const { secret } = require('../resources/configs/auth');
+const { verification } = require('../resources/services/token');
 
-export default (req, res, next) => {
+const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
   const { id } = req.headers;
 
@@ -23,7 +23,7 @@ export default (req, res, next) => {
   if (!/^Bearer$/i.test(scheme))
     return res.status(401).json({ error: 'Invalid token' });
 
-  verify(token, secret, (error, decoded) => {
+  verification(token, secret, (error, decoded) => {
     if (error) return res.status(401).json({ error: 'Invalid token' });
 
     if (id != decoded.id) {
@@ -33,3 +33,5 @@ export default (req, res, next) => {
     return next();
   });
 };
+
+module.exports = auth;
