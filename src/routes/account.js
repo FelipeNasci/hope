@@ -16,7 +16,7 @@ routes.post('/account/login', async (req, res) => {
   }
 });
 
-routes.patch('/account/recover', async (req, res) => {
+routes.post('/account/recover', async (req, res) => {
   try {
     const account = await AccountController.recoverPassword(req.body);
     res.status(200).json(account);

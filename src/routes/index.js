@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../resources/configs/swagger.json');
+const swaggerDocument = require('../resources/configs/swagger');
 
 const account = require('./account');
 
