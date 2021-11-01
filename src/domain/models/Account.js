@@ -1,5 +1,8 @@
-const Account = ({ email, password, type }) => ({
+const Account = ({ id, email, password, accountType }) => ({
+  id,
   email,
   password,
-  type,
+  accountType,
 });
+
+module.exports = Account;

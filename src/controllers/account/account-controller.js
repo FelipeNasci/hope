@@ -1,4 +1,7 @@
 const AccountDatabaseMongo = require('../../infra/database/mongodb/adapters/account-database-mongodb');
+const Authenticate = require('../../domain/use-cases/account/authentication');
+const Auth = require('../../resources/services/token');
+
 /**
  *
  * @param {User} user
@@ -15,7 +18,8 @@ const signup = async user => {
  */
 
 const login = async ({ email, password }) => {
-  return AccountDatabaseMongo.read({ email, password });
+  const account = await AccountDatabaseMongo.read({ email, password });
+  return Authenticate(account, Auth.generateToken)
 };
 
 module.exports = { signup, login };

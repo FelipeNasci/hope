@@ -1,4 +1,5 @@
 const AccountMongodb = require('../models/account-model-mongodb');
+const AccountModel = require('../../../../domain/models/Account');
 
 const AccountDatabase = {
   async create(user) {
@@ -10,9 +11,15 @@ const AccountDatabase = {
   },
   async read({ email }) {
     try {
-      return await AccountMongodb.findOne({ email });
+      const account = await AccountMongodb.findOne({ email });
+
+      if (!account) throw new Error()
+
+      account.id = account._id;
+
+      return AccountModel(account);
     } catch (error) {
-      throw error;
+      return undefined;
     }
   },
 };
