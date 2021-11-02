@@ -88,7 +88,6 @@ const changePasswordWithHashCode = async ({
 
 const accountAuthentication = async account => {
   delete account.password;
-  console.log(account)
   return Authenticate(account, Auth.generateToken);
 };
 
