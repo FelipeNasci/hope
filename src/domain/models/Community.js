@@ -1,6 +1,15 @@
-const Community = ({ id, name, owner, members, posts, created }) => ({
+const Community = ({
   id,
   name,
+  avatarUrl,
+  owner,
+  members,
+  posts,
+  created,
+}) => ({
+  id,
+  name,
+  avatarUrl,
   owner,
   members,
   posts,
