@@ -12,7 +12,7 @@ const signup = async account => {
 
   Email.sendMail({
     to: newAccount.email,
-    subject: 'Email recovery',
+    subject: 'Subscription',
     text: 'Welcome to HOPE!. Your email was registered with us',
   });
 
