@@ -2,11 +2,10 @@ const AccountMongodb = require('../models/account-model-mongodb');
 const AccountModel = require('../../../../domain/models/Account');
 
 const AccountDatabase = {
-  
-/**
- *
- * @param {AccountModel} account
- */
+  /**
+   *
+   * @param {AccountModel} account
+   */
 
   async create(account) {
     try {
@@ -14,15 +13,19 @@ const AccountDatabase = {
       newAccount.id = newAccount._id;
       return AccountModel(newAccount);
     } catch (error) {
-      return undefined;
+      switch (error.code) {
+        case 11000:
+          throw { code: 403, data: { error: 'user already exists' } };
+        default:
+          throw { code: 500, data: { error: 'server error' } };
+      }
     }
   },
 
-  
-/**
- *
- * @param {AccountModel} filter
- */
+  /**
+   *
+   * @param {AccountModel} filter
+   */
 
   async read(filter) {
     try {
@@ -38,12 +41,11 @@ const AccountDatabase = {
     }
   },
 
-  
-/**
- *
- * @param {AccountModel} filter
- * @param {AccountModel} data
- */
+  /**
+   *
+   * @param {AccountModel} filter
+   * @param {AccountModel} data
+   */
 
   async update(filter, data) {
     try {
@@ -62,13 +64,12 @@ const AccountDatabase = {
     }
   },
 
-  
-/**
- *
- * @param {AccountModel} filter
- * @param {AccountModel} data
- * @param {string[]} accountKeys
- */
+  /**
+   *
+   * @param {AccountModel} filter
+   * @param {AccountModel} data
+   * @param {string[]} accountKeys
+   */
 
   async updateAndRemoveKey(filter, data, accountKeys) {
     try {

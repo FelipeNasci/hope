@@ -8,15 +8,19 @@ const Email = require('../../resources/services/email');
  */
 
 const signup = async account => {
-  const newAccount = await AccountDatabaseMongo.create(account);
+  try {
+    const newAccount = await AccountDatabaseMongo.create(account);
 
-  Email.sendMail({
-    to: newAccount.email,
-    subject: 'Subscription',
-    text: 'Welcome to HOPE!. Your email was registered with us',
-  });
+    Email.sendMail({
+      to: newAccount.email,
+      subject: 'Subscription',
+      text: 'Welcome to HOPE!. Your email was registered with us',
+    });
 
-  return accountAuthentication(newAccount);
+    return accountAuthentication(newAccount);
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -27,7 +31,7 @@ const signup = async account => {
 
 const login = async ({ email, password }) => {
   const account = await AccountDatabaseMongo.read({ email, password });
-  if (!account) throw new Error('user not found');
+  if (!account) throw { code: 404, error: 'user not found' };
   return accountAuthentication(account);
 };
 
