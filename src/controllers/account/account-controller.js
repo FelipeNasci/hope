@@ -12,7 +12,7 @@ const signup = async account => {
 
   Email.sendMail({
     to: newAccount.email,
-    subject: 'Subscription',
+    subject: 'Email recovery',
     text: 'Welcome to HOPE!. Your email was registered with us',
   });
 
@@ -50,7 +50,7 @@ const recoverPassword = async ({ email }) => {
     text: `Your code recovery is: ${hashRecover}`,
   });
 
-  return { success: !!accountUpdated };
+  return !!accountUpdated;
 };
 
 /**
