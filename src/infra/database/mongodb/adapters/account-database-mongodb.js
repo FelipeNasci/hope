@@ -58,7 +58,6 @@ const AccountDatabase = {
 
       return AccountModel(accountUpdated);
     } catch (error) {
-      console.log(error);
       return undefined;
     }
   },
@@ -88,7 +87,6 @@ const AccountDatabase = {
 
       return AccountModel(accountUpdated);
     } catch (error) {
-      console.log(error);
       return undefined;
     }
   },
