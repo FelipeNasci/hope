@@ -20,7 +20,7 @@ const create = async ({ name, avatarUrl, ownerId }) => {
     });
 
     const newCommunity = await CommunityDatabaseMongo.create(community);
-    return newCommunity;
+    return { data: newCommunity };
   } catch (error) {
     return error;
   }
@@ -35,7 +35,10 @@ const create = async ({ name, avatarUrl, ownerId }) => {
 const read = async CommunityId => {
   try {
     const community = await CommunityDatabaseMongo.read(CommunityId);
-    return community;
+
+    if (!community) throw { code: 404, data: { error: 'community not found' } };
+
+    return { data: community };
   } catch (error) {
     return error;
   }
@@ -50,7 +53,7 @@ const read = async CommunityId => {
 const list = async filter => {
   try {
     const communities = await CommunityDatabaseMongo.list(filter);
-    return communities;
+    return { data: communities };
   } catch (error) {
     return error;
   }
@@ -69,7 +72,7 @@ const addNewMember = async (communityId, account) => {
       'members',
       account,
     );
-    return communities;
+    return { data: { status: !!communities } };
   } catch (error) {
     return error;
   }

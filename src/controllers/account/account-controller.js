@@ -30,9 +30,13 @@ const signup = async account => {
  */
 
 const login = async ({ email, password }) => {
-  const account = await AccountDatabaseMongo.read({ email, password });
-  if (!account) throw { code: 404, error: 'user not found' };
-  return accountAuthentication(account);
+  try {
+    const account = await AccountDatabaseMongo.read({ email, password });
+    if (!account) throw { code: 404, data: { error: 'email or password invalid' } };
+    return accountAuthentication(account);
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**

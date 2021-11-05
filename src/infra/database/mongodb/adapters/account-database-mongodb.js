@@ -37,7 +37,7 @@ const AccountDatabase = {
 
       return AccountModel(account);
     } catch (error) {
-      return undefined;
+      return { code: 500, data: { error: 'server error' } };
     }
   },
 
@@ -54,13 +54,19 @@ const AccountDatabase = {
         data,
       );
 
-      if (!accountUpdated) throw new Error('user not found');
+      if (!accountUpdated)
+        throw { code: 404, data: { error: 'user not found' } };
 
       accountUpdated.id = accountUpdated._id;
 
       return AccountModel(accountUpdated);
     } catch (error) {
-      return undefined;
+      switch (error.code) {
+        case 404:
+          throw error;
+        default:
+          throw { code: 500, data: { error: 'server error' } };
+      }
     }
   },
 
@@ -74,21 +80,26 @@ const AccountDatabase = {
   async updateAndRemoveKey(filter, data, accountKeys) {
     try {
       let keys = {};
-
       accountKeys.forEach(key => (keys = { ...keys, [key]: 1 }));
 
       const accountUpdated = await AccountMongodb.findOneAndUpdate(filter, {
-        data,
+        ...data,
         $unset: keys,
       });
 
-      if (!accountUpdated) throw new Error('user not found');
+      if (!accountUpdated)
+        throw { code: 404, data: { error: 'user or recovery code not found' } };
 
       accountUpdated.id = accountUpdated._id;
 
       return AccountModel(accountUpdated);
     } catch (error) {
-      return undefined;
+      switch (error.code) {
+        case 404:
+          throw error;
+        default:
+          throw { code: 500, data: { error: 'server error' } };
+      }
     }
   },
 };
