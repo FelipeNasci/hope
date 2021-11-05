@@ -94,24 +94,6 @@ const paths = {
         },
       ],
 
-      // requestBody: {
-      //   content: {
-      //     'application/json': {
-      //       schema: {
-      //         $ref: '#/components/schemas/Community',
-      //       },
-      //       examples: {
-      //         community: {
-      //           value: {
-      //             name: 'Community Name',
-      //             avatarUrl:
-      //               'https://iguatemi.com.br/jkiguatemi/sites/jkiguatemi/files/2020-07/Hope.png',
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      // },
 
       responses: {
         201: {
