@@ -6,7 +6,7 @@ const AccountModel = require('../domain/models/Account');
  * @param {string} email
  * @param {string} password
  * @param {string} accountType
- * @returns
+ * @returns AccountModel
  */
 const signup = async ({ email, password, accountType }) => {
   try {

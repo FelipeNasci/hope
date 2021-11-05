@@ -1,28 +1,30 @@
 const routes = require('express').Router();
-const Community = require('../controllers/community/community-controller');
+const Community = require('../presentation/community');
 const authentication = require('../middlewares/auth');
 
 routes.get('/community/:id', authentication, async (req, res) => {
-  const community = await Community.read(req.params.id);
-  res.status(200).json(community);
+  const { code, data } = await Community.read(req.params);
+  res.status(code).json(data);
 });
 
 routes.post('/community', authentication, async (req, res) => {
-  const community = await Community.create({
+  const { code, data } = await Community.create({
     name: req.body.name,
     ownerId: req.headers.id,
   });
-  res.status(201).json(community);
+  res.status(code).json(data);
 });
 
 routes.get('/communities', authentication, async (req, res) => {
-  const communities = await Community.list(req.query);
-  res.status(200).json(communities);
+  const { code, data } = await Community.list(req.query);
+  res.status(code).json(data);
 });
 
 routes.patch('/community/:id/member', authentication, async (req, res) => {
-  const communities = await Community.addNewMember(req.params.id, req.body);
-  res.status(200).json(communities);
+  const { code, data } = await Community.addNewMember(req.params.id, {
+    id: req.headers.id,
+  });
+  res.status(code).json(data);
 });
 
 module.exports = routes;

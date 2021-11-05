@@ -1,28 +1,70 @@
-const routes = require('express').Router();
-const Community = require('../controllers/community/community-controller');
-const authentication = require('../middlewares/auth');
+const CommunityController = require('../controllers/community/community-controller');
 
-routes.get('/community/:id', authentication, async (req, res) => {
-  const community = await Community.read(req.params.id);
-  res.status(200).json(community);
-});
+/**
+ *
+ * @param {string} name
+ * @param {string} ownerId
+ */
+const create = async ({ name, ownerId }) => {
+  try {
+    const community = await CommunityController.create({ name, ownerId });
+    return { code: 201, data: community };
+  } catch (error) {
+    return error;
+  }
+};
 
-routes.post('/community', authentication, async (req, res) => {
-  const community = await Community.create({
-    name: req.body.name,
-    ownerId: req.headers.id,
-  });
-  res.status(201).json(community);
-});
+/**
+ *
+ * @param {string} id
+ * @returns
+ */
+const read = async ({ id }) => {
+  try {
+    const account = await CommunityController.read(id);
+    return { code: 200, data: account };
+  } catch (error) {
+    return error;
+  }
+};
 
-routes.get('/communities', authentication, async (req, res) => {
-  const communities = await Community.list(req.query);
-  res.status(200).json(communities);
-});
+/**
+ *
+ * @param {string} email
+ * @returns
+ */
+const list = async ({ name }) => {
+  try {
+    const communities = await CommunityController.list(
+      name ? { name } : undefined,
+    );
+    return { code: 200, data: communities };
+  } catch (error) {
+    return error;
+  }
+};
 
-routes.patch('/community/:id/member', authentication, async (req, res) => {
-  const communities = await Community.addNewMember(req.params.id, req.body);
-  res.status(200).json(communities);
-});
+/**
+ *
+ * @param {string} email
+ * @param {string} newPassword
+ * @param {string} hashRecover
+ * @returns
+ */
+const addNewMember = async (communityId, { id }) => {
+  try {
+    const success = await CommunityController.addNewMember(communityId, {
+      id,
+    });
+    return { code: 200, data: success };
+  } catch (error) {
+    return error;
+  }
+};
 
-module.exports = routes;
+module.exports = {
+  create,
+  read,
+  list,
+  addNewMember,
+};

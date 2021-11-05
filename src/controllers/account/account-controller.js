@@ -17,7 +17,7 @@ const signup = async account => {
       text: 'Welcome to HOPE!. Your email was registered with us',
     });
 
-    return accountAuthentication(newAccount);
+    return await accountAuthentication(newAccount);
   } catch (error) {
     throw error;
   }
@@ -32,7 +32,8 @@ const signup = async account => {
 const login = async ({ email, password }) => {
   try {
     const account = await AccountDatabaseMongo.read({ email, password });
-    if (!account) throw { code: 404, data: { error: 'email or password invalid' } };
+    if (!account)
+      throw { code: 404, data: { error: 'email or password invalid' } };
     return accountAuthentication(account);
   } catch (error) {
     throw error;
@@ -86,7 +87,7 @@ const changePasswordWithHashCode = async ({
     text: 'You changed your password with success!',
   });
 
-  return !!accountUpdated;
+  return { success: !!accountUpdated };
 };
 
 /**

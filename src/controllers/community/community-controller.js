@@ -20,7 +20,7 @@ const create = async ({ name, avatarUrl, ownerId }) => {
     });
 
     const newCommunity = await CommunityDatabaseMongo.create(community);
-    return { data: newCommunity };
+    return newCommunity;
   } catch (error) {
     return error;
   }
@@ -38,7 +38,7 @@ const read = async CommunityId => {
 
     if (!community) throw { code: 404, data: { error: 'community not found' } };
 
-    return { data: community };
+    return community;
   } catch (error) {
     return error;
   }
@@ -53,7 +53,7 @@ const read = async CommunityId => {
 const list = async filter => {
   try {
     const communities = await CommunityDatabaseMongo.list(filter);
-    return { data: communities };
+    return communities;
   } catch (error) {
     return error;
   }
@@ -72,7 +72,7 @@ const addNewMember = async (communityId, account) => {
       'members',
       account,
     );
-    return { data: { status: !!communities } };
+    return { status: !!communities };
   } catch (error) {
     return error;
   }

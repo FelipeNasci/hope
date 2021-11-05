@@ -40,6 +40,9 @@ const paths = {
         401: {
           description: 'user already exists',
         },
+        500: {
+          description: 'server error',
+        },
       },
     },
   },
@@ -80,7 +83,7 @@ const paths = {
         400: {
           description: 'bad request',
         },
-        401: {
+        403: {
           description: 'user already exists',
         },
       },
@@ -173,40 +176,43 @@ const schemas = {
   Account: {
     type: 'object',
     properties: {
-      name: {
-        type: 'string',
-      },
-      email: {
-        type: 'string',
-      },
-      accountType: {
-        type: 'string',
-        enum: ['PATIENT, SPECIALIST'],
-      },
-      token: {
-        type: 'string',
+      data: {
+        email: {
+          type: 'string',
+        },
+        accountType: {
+          type: 'string',
+          enum: ['PATIENT, SPECIALIST'],
+        },
+        token: {
+          type: 'string',
+        },
       },
     },
   },
   AccountRecovery: {
     type: 'object',
     properties: {
-      success: {
-        type: 'boolean',
+      data: {
+        status: {
+          type: 'boolean',
+        },
       },
     },
   },
   ChangePassword: {
     type: 'object',
     properties: {
-      email: {
-        type: 'string',
-      },
-      newPassword: {
-        type: 'string',
-      },
-      hashRecover: {
-        type: 'string',
+      data: {
+        email: {
+          type: 'string',
+        },
+        newPassword: {
+          type: 'string',
+        },
+        hashRecover: {
+          type: 'string',
+        },
       },
     },
   },
