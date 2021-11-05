@@ -26,16 +26,7 @@ const CommunityDatabase = {
     try {
       const community = await CommunityMongodb.findById(communityId);
 
-      if (!community)
-        return CommunityModel({
-          id: '',
-          name: '',
-          avatarUrl: '',
-          owner: '',
-          members: '',
-          posts: '',
-          created: '',
-        });
+      if (!community) return undefined;
 
       community.id = community._id;
       return CommunityModel(community);

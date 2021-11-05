@@ -35,6 +35,9 @@ const create = async ({ name, avatarUrl, ownerId }) => {
 const read = async CommunityId => {
   try {
     const community = await CommunityDatabaseMongo.read(CommunityId);
+
+    if (!community) throw { code: 404, data: { error: 'community not found' } };
+
     return community;
   } catch (error) {
     return error;
@@ -69,7 +72,7 @@ const addNewMember = async (communityId, account) => {
       'members',
       account,
     );
-    return communities;
+    return { status: !!communities };
   } catch (error) {
     return error;
   }
