@@ -46,20 +46,25 @@ const login = async ({ email, password }) => {
  */
 
 const recoverPassword = async ({ email }) => {
-  const hashRecover = Math.floor(Math.random() * 1000) + 1000;
+  try {
+    console.log(email)
+    const hashRecover = Math.floor(Math.random() * 1000) + 1000;
 
-  const accountUpdated = await AccountDatabaseMongo.update(
-    { email },
-    { hashRecover },
-  );
+    const accountUpdated = await AccountDatabaseMongo.update(
+      { email },
+      { hashRecover },
+    );
 
-  Email.sendMail({
-    to: email,
-    subject: 'Email recovery',
-    text: `Your code recovery is: ${hashRecover}`,
-  });
+    Email.sendMail({
+      to: email,
+      subject: 'Email recovery',
+      text: `Your code recovery is: ${hashRecover}`,
+    });
 
-  return { success: !!accountUpdated };
+    return { success: !!accountUpdated };
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -75,19 +80,23 @@ const changePasswordWithHashCode = async ({
   newPassword,
   hashRecover,
 }) => {
-  const accountUpdated = await AccountDatabaseMongo.updateAndRemoveKey(
-    { email, hashRecover },
-    { password: newPassword },
-    ['hashRecover'],
-  );
+  try {
+    const accountUpdated = await AccountDatabaseMongo.updateAndRemoveKey(
+      { email, hashRecover },
+      { password: newPassword },
+      ['hashRecover'],
+    );
 
-  Email.sendMail({
-    to: email,
-    subject: 'Email recovery',
-    text: 'You changed your password with success!',
-  });
+    Email.sendMail({
+      to: email,
+      subject: 'Email recovery',
+      text: 'You changed your password with success!',
+    });
 
-  return { success: !!accountUpdated };
+    return { success: !!accountUpdated };
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**

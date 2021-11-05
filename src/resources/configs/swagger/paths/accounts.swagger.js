@@ -90,7 +90,7 @@ const paths = {
     },
   },
   '/account/recover': {
-    post: {
+    patch: {
       summary: 'Account recovery',
       description: 'Get hash code with account recovery',
       tags: ['Accounts'],
@@ -146,6 +146,8 @@ const paths = {
               account: {
                 value: {
                   email: 'japonesboy@hotmail.com',
+                  newPassword: 'password',
+                  hashRecover: '1122',
                 },
               },
             },

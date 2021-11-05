@@ -1,8 +1,9 @@
 const AccountSwagger = require('./paths/accounts.swagger');
 const Authenticated = require('./paths/authenticated.swagger');
+const Communities = require('./paths/communities.swagger');
 
 module.exports = {
-  openapi: '3.0.3',
+  openapi: '3.0.0',
   info: {
     title: 'Hope API',
     description: 'Correct uses of Hope RestAPI',
@@ -30,6 +31,7 @@ module.exports = {
   paths: {
     ...AccountSwagger.paths,
     ...Authenticated.paths,
+    ...Communities.paths,
   },
   components: {
     securitySchemes: {
@@ -54,6 +56,7 @@ module.exports = {
     schemas: {
       ...AccountSwagger.schemas,
       ...Authenticated.schemas,
+      ...Communities.schemas,
     },
   },
 };
