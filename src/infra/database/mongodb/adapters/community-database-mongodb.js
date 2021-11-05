@@ -69,7 +69,7 @@ const CommunityDatabase = {
         $push: { [attribute]: data },
       });
 
-      if (!community) throw { code: 404, error: 'user not found' };
+      if (!community) throw { code: 404, error: 'community not found' };
 
       return true;
     } catch (error) {
